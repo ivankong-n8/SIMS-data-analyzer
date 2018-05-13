@@ -22,6 +22,7 @@ def select_file(folder_name_tk):
 
     for i in list(data.data.columns[1:]):
         ylist_listbox.insert('end',i)
+    # ylist_listbox.select_set(0,tk.END)    # default to select all items
 
     
 folder_name_tk = tk.StringVar()
@@ -35,13 +36,15 @@ data_no_label.grid(column=0, row=1)
 ylist_label = ttk.Label(win, text="Select Plot Data")
 ylist_label.grid(column=1, row=0)
 
-ylist_listbox = tk.Listbox(win, selectmode='MULTIPLE')
+ylist_listbox = tk.Listbox(win, selectmode=tk.MULTIPLE, selectbackground='RED')
 ylist_listbox.grid(column=1, row=1)
 
 def plot(data):
     select_list = ylist_listbox.curselection()
-    print(data)
-    y=ylist_listbox.get(select_list)
+    print(select_list)
+    y=[]
+    for i in select_list:
+        y.append(ylist_listbox.get(i))
     data.plot(y)
 
 plot_button = tk.Button(win, text= 'Plot', command = lambda:plot(data))
