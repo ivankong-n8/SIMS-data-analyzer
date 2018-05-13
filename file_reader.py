@@ -1,5 +1,10 @@
 import pandas as pd
-import matplotlib.pyplot as plt
+
+import matplotlib
+matplotlib.use("TkAgg")
+# to fix crashed [NSApplication _setup:]: unrecognized selector sent to instance
+
+from matplotlib import pyplot as plt
 import os
 
 
