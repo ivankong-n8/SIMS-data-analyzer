@@ -53,4 +53,5 @@ def plot(data):
 plot_button = tk.Button(win, text='Plot', command=lambda: plot(data))
 plot_button.grid(column=2, row=1)
 
+# test
 win.mainloop()
