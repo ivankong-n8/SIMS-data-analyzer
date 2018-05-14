@@ -1,7 +1,7 @@
 # SIMS-data-analyzer
 a tiny app for SIMS data analysis
 
-## v1.00
+## v0.1.0
 - Functions:
     - basic GUI
     - select a single file to load
