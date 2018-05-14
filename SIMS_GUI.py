@@ -16,12 +16,12 @@ def select_file(folder_name_tk):
     global data
     data = fr.data_SIMS(file_adr)
     print(file_adr)
-    data_no_label.config(text=data.no)
+    data_no_label.config(text=data.get_no())
 
     list_num = ylist_listbox.size()
     ylist_listbox.delete(0, list_num-1)      # clear former list
 
-    for i in list(data.data.columns[1:]):
+    for i in data.get_title_list():
         ylist_listbox.insert('end', i)
     # ylist_listbox.select_set(0,tk.END)    # default to select all items
 

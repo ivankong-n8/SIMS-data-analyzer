@@ -1,5 +1,5 @@
-import os
-import pandas as pd
+from os import getcwd, path
+import numpy as np
 import matplotlib
 matplotlib.use("TkAgg")
 # to fix crashed [NSApplication _setup:]:
@@ -15,17 +15,50 @@ class data_SIMS(object):
 
     def __init__(self, file_adr):
         '''
-        file: string,abs path point to a txt file including standart SIMS data
-        self.no:sample's label number
-        self.data: a Pandas DataFrame
+        file_adr: string, abs path point to a txt file including standart SIMS data
+        self.no: sample's label number
+        self.data: a Numpy narray
+        self.title: a list of title for each data column
         '''
-        self.data = pd.read_table(file_adr, sep=r'\s+', skiprows=(0, 1, 3, 4))
+        self.file_adr = file_adr
+        self.data = None
+        self.title = []
+        self.load_data()
 
-        filename = os.path.basename(file_adr)
+        filename = path.basename(file_adr)
         if filename.endswith('.txt') or filename.endswith('.TXT'):
-            self.no = filename[:-4]     # del '.txt'
+            self.no = filename[:-4]     # del '.txt' or '.TXT'
         else:
             raise ValueError('This is not a txt file')
+
+    def get_no(self):
+        '''
+        Return sample's label number
+        '''
+        return self.no
+
+    def get_title_list(self):
+        return self.title
+
+    def load_data(self):
+        '''
+        A method to load data without Pandas
+        '''
+        self.data = np.loadtxt(self.file_adr, comments='#').T   # use comments '#' to skip first 5 lines
+        print(self.data[0])
+        print(self.data[1])
+
+        inFile = open(self.file_adr,'r')
+        lines = inFile.readlines()
+        inFile.close()
+
+        self.title = lines[2].split('\t')[1:-1]
+        # print(self.title)
+
+        # print(self.data)
+        # print(self.data.shape)
+
+
 
     def plot(self, ylist=None, logStat=True):
         '''
@@ -33,8 +66,14 @@ class data_SIMS(object):
         logStat: 'True' to plot log graph, 'False' to plot linear graph
         '''
         if ylist is None:
-            ylist = self.data.columns[1:]
-        self.data.plot(x='#', y=ylist, logy=logStat)
+            ylist = self.title
+        # self.data.plot(x='#', y=ylist, logy=logStat)
+        
+        plt.figure()
+        for y_title in ylist:
+            index = self.title.index(y_title)+1
+            plt.semilogy(self.data[0], self.data[index],label=y_title)
+        plt.legend()
         plt.show()
 
 
@@ -43,8 +82,9 @@ class data_SIMS(object):
 # =============================================================================
 
 if __name__ == '__main__':
-    file_dir = '/Users/yfkong/GitHub/SIMS-data-analyzer/test_data.TXT'
+    file = 'test_data.TXT'
+    file_path = getcwd()
+    file_dir = path.join(file_path, file)
     a = data_SIMS(file_dir)
-    # print(a.data.columns[1:].copy())
-    # a.plot(['Mo+','Na+'])
-    print(a.no)
+    a.plot()
+    # print(a.no)
