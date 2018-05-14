@@ -1,11 +1,10 @@
+import os
 import pandas as pd
-
 import matplotlib
 matplotlib.use("TkAgg")
-# to fix crashed [NSApplication _setup:]: unrecognized selector sent to instance
-
+# to fix crashed [NSApplication _setup:]:
+# unrecognized selector sent to instance
 from matplotlib import pyplot as plt
-import os
 
 
 class data_SIMS(object):
@@ -16,7 +15,7 @@ class data_SIMS(object):
 
     def __init__(self, file_adr):
         '''
-        file: string,abs path point to a file, a txt file contains standart SIMS data
+        file: string,abs path point to a txt file including standart SIMS data
         self.no:sample's label number
         self.data: a Pandas DataFrame
         '''
@@ -33,15 +32,15 @@ class data_SIMS(object):
         ylist: a list or string to choose data of y to plot
         logStat: 'True' to plot log graph, 'False' to plot linear graph
         '''
-        if ylist == None:
+        if ylist is None:
             ylist = self.data.columns[1:]
         self.data.plot(x='#', y=ylist, logy=logStat)
         plt.show()
 
+
 # =============================================================================
 # case for test
 # =============================================================================
-
 
 if __name__ == '__main__':
     file_dir = '/Users/yfkong/GitHub/SIMS-data-analyzer/test_data.TXT'
