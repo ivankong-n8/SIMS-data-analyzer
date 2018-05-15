@@ -15,7 +15,8 @@ class data_SIMS(object):
 
     def __init__(self, file_adr):
         '''
-        file_adr: string, abs path point to a txt file including standart SIMS data
+        file_adr:   string, abs path point to a txt file including standard
+        SIMS data
         self.no: sample's label number
         self.data: a Numpy narray
         self.title: a list of title for each data column
@@ -44,11 +45,12 @@ class data_SIMS(object):
         '''
         A method to load data without Pandas
         '''
-        self.data = np.loadtxt(self.file_adr, comments='#').T   # use comments '#' to skip first 5 lines
+        self.data = np.loadtxt(self.file_adr, comments='#').T
+        # use comments '#' to skip first 5 lines
         print(self.data[0])
         print(self.data[1])
 
-        inFile = open(self.file_adr,'r')
+        inFile = open(self.file_adr, 'r')
         lines = inFile.readlines()
         inFile.close()
 
@@ -58,8 +60,6 @@ class data_SIMS(object):
         # print(self.data)
         # print(self.data.shape)
 
-
-
     def plot(self, ylist=None, logStat=True):
         '''
         ylist: a list or string to choose data of y to plot
@@ -68,11 +68,10 @@ class data_SIMS(object):
         if ylist is None:
             ylist = self.title
         # self.data.plot(x='#', y=ylist, logy=logStat)
-        
         plt.figure()
         for y_title in ylist:
             index = self.title.index(y_title)+1
-            plt.semilogy(self.data[0], self.data[index],label=y_title)
+            plt.semilogy(self.data[0], self.data[index], label=y_title)
         plt.legend()
         plt.show()
 
