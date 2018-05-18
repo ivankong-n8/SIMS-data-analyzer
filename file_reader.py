@@ -1,7 +1,7 @@
 from os import getcwd, path
 import numpy as np
 import matplotlib
-matplotlib.use("TkAgg")
+# matplotlib.use("TkAgg")
 # to fix crashed [NSApplication _setup:]:
 # unrecognized selector sent to instance
 from matplotlib import pyplot as plt
@@ -81,9 +81,9 @@ class data_SIMS(object):
 # =============================================================================
 
 if __name__ == '__main__':
-    file = 'test_data.TXT'
-    file_path = getcwd()
-    file_dir = path.join(file_path, file)
+    file_dir = 'test_data.TXT'
+    # file_path = getcwd()
+    # file_dir = path.join(file_path, file)
     a = data_SIMS(file_dir)
     a.plot()
     # print(a.no)
